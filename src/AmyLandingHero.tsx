@@ -6,10 +6,12 @@ export default function AmyLandingHero(){
   return (
    <div className="font-sans">
 
+     {/* Your Content/Components */}
+
 
         {/* Main Hero Section - Full Viewport Height */}
-        <div className="max-w-[1100px] mx-auto p-6 flex flex-col items-center justify-center min-h-screen ">
-            <main className="flex items-center gap-16 md:gap-24 w-full justify-center md:flex-row flex-col z-50">
+        <div className="max-w-[1100px] mx-auto p-6 flex flex-col items-center justify-center min-h-screen pt-30 md:pt-6">
+            <main className="flex items-center gap-8 md:gap-24 w-full justify-center md:flex-row flex-col z-50">
                 <div className="md:w-[50%] w-full max-w-[450px] text-center md:text-left">
                     <div className="flex items-center font-semibold text-3xl mb-6 justify-center md:justify-start">
                         <img src="https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553363/icon_zddsrd.png" alt="Kriya" className="w-[60px] h-[60px] rounded-[14px] mr-3 border border-gray-200 shadow-sm"/>
@@ -52,7 +54,7 @@ export default function AmyLandingHero(){
                 </div>
                 <div className="w-full max-w-[350px] flex-none mt-6 md:mt-0">
                     <video 
-                        src="https://res.cloudinary.com/dztfsdmcv/video/upload/v1761552515/kriyalanding1_efw92u.mp4" 
+                        src="https://res.cloudinary.com/dztfsdmcv/video/upload/v1761584400/phone2_hydrjq.mp4" 
                         className="w-full h-auto rounded-xl shadow-lg"
                         autoPlay
                         muted
