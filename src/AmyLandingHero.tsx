@@ -122,11 +122,13 @@ export default function AmyLandingHero(){
                 <div className="w-full max-w-[350px] flex-none mt-6 md:mt-0">
                     <video 
                         src="https://ik.imagekit.io/bitwisedharma/_MConverter.mp4?updatedAt=1770712290029" 
+                        poster="https://ik.imagekit.io/bitwisedharma/_MConverter.mp4/ik-thumbnail.jpg?updatedAt=1770712290029"
                         className="w-full h-auto rounded-xl shadow-lg"
                         autoPlay
                         muted
                         loop
                         playsInline
+                        preload="auto"
                         aria-label="Kriya App Preview"
                     />
                 </div>
@@ -163,7 +165,7 @@ export default function AmyLandingHero(){
                         {/* Logo and tagline */}
                         <div className="flex flex-col items-center md:items-start">
                             <div className="flex items-center font-semibold text-2xl mb-2">
-                                <img src="https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553363/icon_zddsrd.png" alt="Kriya" className="w-10 h-10 rounded-xl mr-2 border border-gray-200 shadow-sm"/>
+                                <img src="https://res.cloudinary.com/dztfsdmcv/image/upload/v1770712720/icon_zddsrd_saad1s.webp" alt="Kriya" className="w-10 h-10 rounded-xl mr-2 border border-gray-200 shadow-sm"/>
                                 <span className="font-instrument italic font-medium tracking-normal">kriya</span>
                             </div>
                             <p className="text-gray-600 text-sm text-center md:text-left">Spiritual productivity for the modern age</p>
