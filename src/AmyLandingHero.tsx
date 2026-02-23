@@ -121,8 +121,7 @@ export default function AmyLandingHero(){
                 </div>
                 <div className="w-full max-w-[350px] flex-none mt-6 md:mt-0">
                     <video 
-                        src="https://ik.imagekit.io/bitwisedharma/_MConverter.mp4?updatedAt=1770712290029" 
-                        poster="https://ik.imagekit.io/bitwisedharma/_MConverter.mp4/ik-thumbnail.jpg?updatedAt=1770712290029"
+                        src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demo.mp4" 
                         className="w-full h-auto rounded-xl shadow-lg"
                         autoPlay
                         muted
