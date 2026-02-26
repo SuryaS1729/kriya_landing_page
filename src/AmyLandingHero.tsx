@@ -121,7 +121,7 @@ export default function AmyLandingHero(){
                 </div>
                 <div className="w-full max-w-[350px] flex-none mt-6 md:mt-0">
                     <video 
-                        src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demo.mp4" 
+                        src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" 
                         poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp"
                         className="w-full h-auto rounded-xl shadow-lg"
                         autoPlay
