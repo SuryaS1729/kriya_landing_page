@@ -177,6 +177,7 @@ export default function AmyLandingHero(){
                                 <a href="https://x.com/SuryaS_1729" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 transition-colors">Twitter</a>
                                 <a href="https://play.google.com/store/apps/details?id=com.surya7314.kriya" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 transition-colors">Android</a>
                                 <a href="https://apps.apple.com/us/app/kriya-spiritual-productivity/id6752873883" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 transition-colors">iOS</a>
+                                <a href="/privacy" className="text-gray-600 hover:text-gray-800 transition-colors">Privacy Policy</a>
                             </div>
                         </div>
                     </div>
