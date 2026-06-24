@@ -1,14 +1,37 @@
 
 
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { Tooltip } from "@/components/ui/tooltip-card";
+
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.surya7314.kriya";
+const APP_STORE_URL = "https://apps.apple.com/us/app/kriya-spiritual-productivity/id6752873883";
+const PLAY_STORE_BADGE = "https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553362/playstore2_yckyyt.avif";
+const APP_STORE_BADGE = "https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553361/appstore1_ywtpdn.avif";
+const PLAY_STORE_QR_CODE = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(PLAY_STORE_URL)}`;
+const APP_STORE_QR_CODE = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(APP_STORE_URL)}`;
+
+type Platform = "web" | "ios" | "android";
+
+const detectPlatform = (): Platform => {
+  const userAgent = window.navigator.userAgent || "";
+  const platform = window.navigator.platform || "";
+  const isAndroid = /Android/i.test(userAgent);
+  const isIOS =
+    /iPad|iPhone|iPod/i.test(userAgent) ||
+    (platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+
+  if (isAndroid) return "android";
+  if (isIOS) return "ios";
+  return "web";
+};
 
 // QR Code components for each store
 const PlayStoreQRCode = () => {
   return (
     <div className="flex flex-col items-center">
       <img
-        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://play.google.com/store/apps/details?id=com.surya7314.kriya"
+        src={PLAY_STORE_QR_CODE}
         alt="Play Store QR Code"
         className="w-full aspect-square rounded-sm bg-white p-2"
       />
@@ -23,13 +46,112 @@ const AppStoreQRCode = () => {
   return (
     <div className="flex flex-col items-center">
       <img
-        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://apps.apple.com/us/app/kriya-spiritual-productivity/id6752873883"
+        src={APP_STORE_QR_CODE}
         alt="App Store QR Code"
         className="w-full aspect-square rounded-sm bg-white p-2"
       />
       <p className="mt-3 text-center text-xs font-medium text-neutral-700 dark:text-neutral-300">
         Scan to download on iOS
       </p>
+    </div>
+  );
+};
+
+const StoreBadgeLink = ({
+  href,
+  src,
+  alt,
+  mobileOnly = false,
+}: {
+  href: string;
+  src: string;
+  alt: string;
+  mobileOnly?: boolean;
+}) => (
+  <motion.a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`${mobileOnly ? "md:hidden " : ""}flex items-center justify-center rounded-lg hover:opacity-80 transition-opacity`}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+  >
+    <img src={src} alt={alt} className="w-36 h-10 object-contain" />
+  </motion.a>
+);
+
+const DownloadButtons = () => {
+  const [platform, setPlatform] = useState<Platform>("web");
+
+  useEffect(() => {
+    setPlatform(detectPlatform());
+  }, []);
+
+  const isIOS = platform === "ios";
+  const isAndroid = platform === "android";
+
+  return (
+    <div className="mt-6 mb-8">
+      {(isIOS || isAndroid) && (
+        <p className="mb-3 text-sm font-medium text-gray-500 text-center md:text-left">
+          We detected you're on {isIOS ? "iOS" : "Android"}.
+        </p>
+      )}
+
+      <div className="flex flex-row gap-2 items-center md:items-start md:justify-start justify-center">
+        {(!isIOS && !isAndroid) && (
+          <>
+            <div className="hidden md:block">
+              <Tooltip content={<PlayStoreQRCode />}>
+                <StoreBadgeLink
+                  href={PLAY_STORE_URL}
+                  src={PLAY_STORE_BADGE}
+                  alt="Get it on Google Play"
+                />
+              </Tooltip>
+            </div>
+            <StoreBadgeLink
+              href={PLAY_STORE_URL}
+              src={PLAY_STORE_BADGE}
+              alt="Get it on Google Play"
+              mobileOnly
+            />
+
+            <div className="hidden md:block">
+              <Tooltip content={<AppStoreQRCode />}>
+                <StoreBadgeLink
+                  href={APP_STORE_URL}
+                  src={APP_STORE_BADGE}
+                  alt="Download on the App Store"
+                />
+              </Tooltip>
+            </div>
+            <StoreBadgeLink
+              href={APP_STORE_URL}
+              src={APP_STORE_BADGE}
+              alt="Download on the App Store"
+              mobileOnly
+            />
+          </>
+        )}
+
+        {isAndroid && (
+          <StoreBadgeLink
+            href={PLAY_STORE_URL}
+            src={PLAY_STORE_BADGE}
+            alt="Get it on Google Play"
+          />
+        )}
+
+        {isIOS && (
+          <StoreBadgeLink
+            href={APP_STORE_URL}
+            src={APP_STORE_BADGE}
+            alt="Download on the App Store"
+          />
+        )}
+      </div>
     </div>
   );
 };
@@ -52,65 +174,7 @@ export default function AmyLandingHero(){
                     <h1 className="font-display md:text-[2.46rem] text-[1.93rem] font-bold leading-tight mb-4 text-gray-900">Get Spiritually Productive</h1>
                     <p className="text-base text-gray-600 mb-6 leading-relaxed"><span className="font-instrument italic font-extrabold tracking-normal text-xl bg-amber-100 rounded-lg px-2 py-1">kriya</span> blends timeless wisdom from the Gita with modern design to help you act with clarity.
                         <br/><br/>Plan your day, one mindful task at a time.</p>
-                    <div className="flex flex-row gap-2 mt-6 items-center md:items-start md:justify-start justify-center mb-8 ">
-                        {/* Play Store Button - QR tooltip on desktop only */}
-                        <div className="hidden md:block">
-                            <Tooltip content={<PlayStoreQRCode />}>
-                                <motion.a 
-                                    href="https://play.google.com/store/apps/details?id=com.surya7314.kriya" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
-                                    className="flex items-center justify-center rounded-lg hover:opacity-80 transition-opacity"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                                >
-                                    <img src="https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553362/playstore2_yckyyt.avif" alt="Get it on Google Play" className="w-36 h-10 object-contain" />
-                                </motion.a>
-                            </Tooltip>
-                        </div>
-                        {/* Play Store Button - Direct link on mobile */}
-                        <motion.a 
-                            href="https://play.google.com/store/apps/details?id=com.surya7314.kriya" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="md:hidden flex items-center justify-center rounded-lg hover:opacity-80 transition-opacity"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                        >
-                            <img src="https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553362/playstore2_yckyyt.avif" alt="Get it on Google Play" className="w-36 h-10 object-contain" />
-                        </motion.a>
-
-                        {/* App Store Button - QR tooltip on desktop only */}
-                        <div className="hidden md:block">
-                            <Tooltip content={<AppStoreQRCode />}>
-                                <motion.a 
-                                    href="https://apps.apple.com/us/app/kriya-spiritual-productivity/id6752873883" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
-                                    className="flex items-center justify-center rounded-lg hover:opacity-80 transition-opacity"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                                >
-                                    <img src="https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553361/appstore1_ywtpdn.avif" alt="Download on the App Store" className="w-36 h-10 object-contain" />
-                                </motion.a>
-                            </Tooltip>
-                        </div>
-                        {/* App Store Button - Direct link on mobile */}
-                        <motion.a 
-                            href="https://apps.apple.com/us/app/kriya-spiritual-productivity/id6752873883" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="md:hidden flex items-center justify-center rounded-lg hover:opacity-80 transition-opacity"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                        >
-                            <img src="https://res.cloudinary.com/dztfsdmcv/image/upload/v1761553361/appstore1_ywtpdn.avif" alt="Download on the App Store" className="w-36 h-10 object-contain" />
-                        </motion.a>
-                    </div>
+                    <DownloadButtons />
                     <a href="https://x.com/SuryaS_1729" target="_blank" rel="noopener noreferrer" className="text-gray-400 font-medium hover:text-gray-600 transition-colors flex items-center gap-2 text-sm justify-center md:justify-start  mt-3">
                         <span>Follow @SuryaS_1729
  for updates</span>
