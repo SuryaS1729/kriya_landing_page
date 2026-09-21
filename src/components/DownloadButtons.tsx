@@ -42,8 +42,8 @@ export default function DownloadButtons() {
           <span className="pointer-events-none absolute bottom-0 left-0 h-5 w-5 rounded-bl-md border-b-2 border-l-2 border-gray-900/70" aria-hidden="true" />
           <span className="pointer-events-none absolute bottom-0 right-0 h-5 w-5 rounded-br-md border-b-2 border-r-2 border-gray-900/70" aria-hidden="true" />
         </div>
-        <p className="mt-3 text-center text-sm font-medium text-gray-500 md:text-left">
-          Scan to download Kriya on your phone
+        <p className="mt-3 text-center text-sm font-medium text-gray-700 md:text-left">
+          Scan to download <span className=" font-instrument text-lg italic">kriya</span> on your phone
         </p>
       </div>
     );

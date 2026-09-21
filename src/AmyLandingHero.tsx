@@ -10,14 +10,14 @@ export default function AmyLandingHero() {
     <div className="font-sans">
       <div
         className="w-full bg-cover bg-center"
-        style={{ backgroundImage: "url('/assets/4.png')" }}
+        style={{ backgroundImage: "url('/assets/6.jpeg')" }}
       >
         <div className="mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center p-6 pt-30 md:pt-6">
-          <div className="w-full max-w-[980px] md:rounded-3xl md:border md:border-white/80 md:bg-white/[0.84] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
+          <div className="w-full max-w-[980px] md:rounded-3xl md:border md:border-white/30 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
             <main className="z-50 flex w-full flex-col items-center justify-center gap-8 md:flex-row md:gap-24">
           <div className="w-full max-w-[450px] text-center md:w-[50%] md:text-left">
             <div className="mb-6 flex items-center justify-center text-3xl font-semibold md:justify-start">
-              <Image src={LOGO_URL} alt="Kriya" width={60} height={60} className="mr-3 rotate-[-9deg] rounded-[14px] border border-gray-200 shadow-sm" />
+              <Image src={LOGO_URL} alt="Kriya" width={60} height={60} className="mr-3 rotate-[-9deg] rounded-[14px] shadow-sm" />
               <span className="inline font-instrument font-medium italic tracking-normal text-cyan-800 md:hidden">kriya</span>
             </div>
             <h1 className={`${recoleta.className} mb-4 text-[1.93rem] leading-tight text-gray-900 md:text-[2.46rem]`}>Get Spiritually Productive</h1>
