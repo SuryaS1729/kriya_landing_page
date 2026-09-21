@@ -9,10 +9,11 @@ export default function AmyLandingHero() {
   return (
     <div className="font-sans ">
       <div
-        className="w-full bg-cover bg-center bg-[url('/assets/4.png')] md:bg-[url('/assets/6.jpeg')]"
+        className="relative w-full bg-cover bg-center bg-[url('/assets/9.jpeg')] md:bg-[url('/assets/6.jpeg')]"
       >
-        <div className="mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center p-6 pt-30 md:pt-6">
-          <div className="w-full max-w-[980px] md:rounded-3xl md:border md:border-white/30 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
+        <div aria-hidden="true" className="absolute inset-0 hidden bg-white/30 md:block" />
+        <div className="relative mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center p-6 pt-30 md:pt-6">
+          <div className="w-full max-w-[980px] md:rounded-3xl md:border md:border-gray-500/10 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
             <main className="z-50 flex w-full flex-col items-center justify-center gap-8 md:flex-row md:gap-24">
           <div className="w-full max-w-[450px] text-center md:w-[50%] md:text-left">
             <div className="mb-6 flex items-center justify-center text-3xl font-semibold md:justify-start">
