@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useReducedMotion } from "motion/react";
 import { RoughNotation } from "react-rough-notation";
 import DownloadButtons from "@/components/DownloadButtons";
 import { recoleta } from "@/fonts";
@@ -12,7 +13,19 @@ const LOGO_URL = "https://kriyarecordings.bitwisedharma.com/icon.webp";
 export default function AmyLandingHero() {
   const [showAnnotation, setShowAnnotation] = useState(false);
   const [showGitaHighlight, setShowGitaHighlight] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const gitaRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setShowAnnotation(true), 600);
@@ -46,7 +59,7 @@ export default function AmyLandingHero() {
         <div aria-hidden="true" className="absolute inset-0 hidden bg-white/30 md:block" />
         <div aria-hidden="true" className="absolute right-0 top-0 h-[45%] w-[85%] bg-gradient-to-bl from-white/70 via-white/35 to-transparent md:hidden" />
         <div className="relative mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center p-6 pt-30 md:pt-6">
-          <div className="w-full max-w-[980px] md:rounded-3xl md:border md:border-gray-500/10 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
+          <div className="w-full max-w-[980px] overflow-hidden md:rounded-3xl md:border md:border-gray-500/10 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
             <main className="z-50 flex w-full flex-col items-center justify-center gap-8 md:flex-row md:gap-24">
           <div className="w-full max-w-[450px] text-center md:w-[50%] md:text-left">
             <div className="mb-6 flex items-center justify-center text-3xl font-semibold md:justify-start">
@@ -71,23 +84,31 @@ export default function AmyLandingHero() {
               <br /><br />Plan your day, one mindful task at a time.
             </p>
             <DownloadButtons />
-            <a href="https://x.com/SuryaS_1729" target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-600 md:justify-start">
-              <span>Follow @SuryaS_1729 for updates</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
+            <p className="mt-3 inline-flex items-center rounded-full border border-[#4A6484]/10 px-3 py-1 text-center font-space-mono text-[11px] tracking-wide text-gray-500 md:-ml-3">
+              free forever · offline · no signup · open source
+            </p>
           </div>
-          <div className="mt-6 w-full max-w-[350px] flex-none md:mt-0">
-            <video src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp" className="h-auto w-full rounded-xl shadow-lg" autoPlay muted loop playsInline preload="metadata" aria-label="Kriya App Preview" />
-          </div>
+          {isDesktop && !prefersReducedMotion ? (
+            <motion.div
+              className="mt-6 w-full max-w-[350px] flex-none md:mt-0"
+              initial={{ x: 220, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <video src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp" className="h-auto w-full rounded-xl shadow-lg" autoPlay muted loop playsInline preload="metadata" aria-label="Kriya App Preview" />
+            </motion.div>
+          ) : (
+            <div className="mt-6 w-full max-w-[350px] flex-none md:mt-0">
+              <video src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp" className="h-auto w-full rounded-xl shadow-lg" autoPlay muted loop playsInline preload="metadata" aria-label="Kriya App Preview" />
+            </div>
+          )}
             </main>
           </div>
         </div>
       </div>
 
       <section className="mt-16 px-6">
-        <div className="mx-auto max-w-[700px] selection:bg-cyan-200 selection:text-purple-900">
+        <div className="mx-auto max-w-[700px] selection:bg-blue-900/70 selection:text-white">
           <h2 className={`${recoleta.className}  mb-6 text-center text-2xl text-gray-900 md:mb-8 md:text-3xl`}>The story behind <span className="text-cyan-800 font-instrument italic">kriya ...</span></h2>
           <div className="space-y-4 leading-relaxed text-gray-700">
             <p>The seed for <span className="font-instrument text-xl font-medium italic text-cyan-800">kriya</span> was first inspired by <a href="https://x.com/ash1sh0kumar" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@ash1sh0kumar</a>&apos;s Gitasay, and later, the <a href="https://x.com/indiainpixels" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@indiainpixels</a> Hackathon reaffirmed my belief that many Indians today are seeking to reconnect with their roots. There’s an Indic renaissance quietly unfolding, a growing curiosity to understand our own philosophies in a modern context.</p>

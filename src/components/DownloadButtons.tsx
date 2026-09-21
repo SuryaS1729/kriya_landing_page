@@ -26,7 +26,7 @@ export default function DownloadButtons() {
 
   if (!isMobile) {
     return (
-      <div className="mb-8 mt-6 flex flex-col items-center md:items-start">
+      <div className="mb-4 mt-6 flex flex-col items-center md:items-start">
         <div className="relative h-40 w-40">
           <div className="absolute inset-2 overflow-hidden rounded-md bg-white shadow-sm">
             <Image

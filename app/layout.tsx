@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
+import { Instrument_Serif, Inter, Space_Mono } from "next/font/google";
 import { recoleta } from "../src/fonts";
 import "../src/index.css";
 import "../src/App.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const instrumentSerif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-instrument-serif" });
+const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-space-mono-family" });
 
 export const metadata: Metadata = {
   title: "Kriya: Spiritual Productivity",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${instrumentSerif.variable} ${recoleta.variable}`}>{children}</body>
+      <body className={`${inter.variable} ${instrumentSerif.variable} ${spaceMono.variable} ${recoleta.variable}`}>{children}</body>
     </html>
   );
 }
