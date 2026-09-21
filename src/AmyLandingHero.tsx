@@ -7,10 +7,9 @@ const LOGO_URL = "https://kriyarecordings.bitwisedharma.com/icon.webp";
 
 export default function AmyLandingHero() {
   return (
-    <div className="font-sans">
+    <div className="font-sans ">
       <div
-        className="w-full bg-cover bg-center"
-        style={{ backgroundImage: "url('/assets/6.jpeg')" }}
+        className="w-full bg-cover bg-center bg-[url('/assets/4.png')] md:bg-[url('/assets/6.jpeg')]"
       >
         <div className="mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center p-6 pt-30 md:pt-6">
           <div className="w-full max-w-[980px] md:rounded-3xl md:border md:border-white/30 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
@@ -22,11 +21,11 @@ export default function AmyLandingHero() {
             </div>
             <h1 className={`${recoleta.className} mb-4 text-[1.93rem] leading-tight text-gray-900 md:text-[2.46rem]`}>Get Spiritually Productive</h1>
             <p className="mb-6 text-base leading-relaxed text-gray-600">
-              <span className="font-instrument text-xl font-extrabold italic tracking-normal text-cyan-800">kriya</span> blends timeless wisdom from the Gita with a modern workflow to help you act with clarity.
+              <span className="font-instrument text-xl font-semibold italic tracking-normal text-cyan-800">kriya</span> blends timeless wisdom from the Gita with a modern workflow to help you act with clarity.
               <br /><br />Plan your day, one mindful task at a time.
             </p>
             <DownloadButtons />
-            <a href="https://x.com/SuryaS_1729" target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-gray-600 md:justify-start">
+            <a href="https://x.com/SuryaS_1729" target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-600 md:justify-start">
               <span>Follow @SuryaS_1729 for updates</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -43,9 +42,9 @@ export default function AmyLandingHero() {
 
       <section className="mt-16 px-6">
         <div className="mx-auto max-w-[700px] selection:bg-cyan-200 selection:text-purple-900">
-          <h2 className={`${recoleta.className} mb-6 text-center text-2xl text-gray-900 md:mb-8 md:text-3xl`}>The Story Behind <span className="text-cyan-800">Kriya</span></h2>
+          <h2 className={`${recoleta.className}  mb-6 text-center text-2xl text-gray-900 md:mb-8 md:text-3xl`}>The story behind <span className="text-cyan-800 font-instrument italic">kriya ...</span></h2>
           <div className="space-y-4 leading-relaxed text-gray-700">
-            <p>The seed for <span className="font-instrument text-xl font-semibold italic text-cyan-800">kriya</span> was first inspired by <a href="https://x.com/ash1sh0kumar" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@ash1sh0kumar</a>&apos;s Gitasay, and later, the <a href="https://x.com/indiainpixels" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@indiainpixels</a> Hackathon reaffirmed my belief that many Indians today are seeking to reconnect with their roots. There’s an Indic renaissance quietly unfolding, a growing curiosity to understand our own philosophies in a modern context.</p>
+            <p>The seed for <span className="font-instrument text-xl font-medium italic text-cyan-800">kriya</span> was first inspired by <a href="https://x.com/ash1sh0kumar" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@ash1sh0kumar</a>&apos;s Gitasay, and later, the <a href="https://x.com/indiainpixels" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@indiainpixels</a> Hackathon reaffirmed my belief that many Indians today are seeking to reconnect with their roots. There’s an Indic renaissance quietly unfolding, a growing curiosity to understand our own philosophies in a modern context.</p>
             <p>The goal was simple: to make the Bhagavad Gita accessible to everyone, especially millennials and Gen Z who are in the most active, fast-paced phases of their lives, on their phones, in a clean and modern interface.</p>
             <p className="font-semibold italic text-cyan-800"><span className="font-instrument text-xl font-semibold text-cyan-800">kriya</span> means action.</p>
             <p>In many Indian households, there&apos;s a subtle hesitation around reading ancient scriptures, as if they&apos;re meant only for one&apos;s post-retirement years, something to turn to after the rush of life has passed. I&apos;ve always disagreed with that.</p>
