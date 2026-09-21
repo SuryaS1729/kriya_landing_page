@@ -59,7 +59,7 @@ export default function DownloadButtons() {
         transition={{ type: "spring", stiffness: 400, damping: 20 }}
       >
         <Download className="h-4 w-4" aria-hidden="true" />
-        <span>Download</span>
+        <span>Download the app</span>
       </motion.a>
     </div>
   );
