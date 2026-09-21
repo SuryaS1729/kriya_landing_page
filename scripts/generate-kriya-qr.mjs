@@ -11,7 +11,7 @@ await QRCode.toFile(`${outputDirectory}/kriya-download.png`, downloadUrl, {
   width: 800,
   margin: 4,
   errorCorrectionLevel: "M",
-  color: { dark: "#000000", light: "#ffffff" },
+  color: { dark: "#4A6484", light: "#ffffff" },
 });
 
 await QRCode.toFile(`${outputDirectory}/kriya-download.svg`, downloadUrl, {
@@ -19,7 +19,7 @@ await QRCode.toFile(`${outputDirectory}/kriya-download.svg`, downloadUrl, {
   width: 800,
   margin: 4,
   errorCorrectionLevel: "M",
-  color: { dark: "#000000", light: "#ffffff" },
+  color: { dark: "#4A6484", light: "#ffffff" },
 });
 
 console.log(`Generated QR assets for ${downloadUrl}`);

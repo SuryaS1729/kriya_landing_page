@@ -1,11 +1,43 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { RoughNotation } from "react-rough-notation";
 import DownloadButtons from "@/components/DownloadButtons";
 import { recoleta } from "@/fonts";
 
 const LOGO_URL = "https://kriyarecordings.bitwisedharma.com/icon.webp";
 
 export default function AmyLandingHero() {
+  const [showAnnotation, setShowAnnotation] = useState(false);
+  const [showGitaHighlight, setShowGitaHighlight] = useState(false);
+  const gitaRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowAnnotation(true), 600);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const el = gitaRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setShowGitaHighlight(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowGitaHighlight(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   return (
     <div className="font-sans ">
       <div
@@ -20,7 +52,19 @@ export default function AmyLandingHero() {
               <Image src={LOGO_URL} alt="Kriya" width={60} height={60} className="mr-3 rotate-[-9deg] rounded-[14px] shadow-sm" />
               <span className="inline font-instrument font-medium italic tracking-normal text-cyan-800 md:hidden">kriya</span>
             </div>
-            <h1 className={`${recoleta.className} mb-4 text-[1.93rem] leading-tight text-gray-900 md:text-[2.46rem]`}>Get Spiritually Productive</h1>
+            <h1 className={`${recoleta.className} mb-4 text-[1.93rem] leading-tight text-gray-900 md:text-[2.46rem]`}>Get{" "}
+              <RoughNotation
+                type="underline"
+                show={showAnnotation}
+                color="#F0B078"
+                strokeWidth={2.5}
+                padding={2}
+                animationDuration={1200}
+                multiline
+              >
+                Spiritually Productive
+              </RoughNotation>
+            </h1>
             <p className="mb-6 text-base leading-relaxed text-gray-600">
               <span className="font-instrument text-xl font-semibold italic tracking-normal text-cyan-800">kriya</span> blends timeless wisdom from the Gita with a modern workflow to help you act with clarity.
               <br /><br />Plan your day, one mindful task at a time.
@@ -50,7 +94,19 @@ export default function AmyLandingHero() {
             <p className="font-semibold italic text-cyan-800"><span className="font-instrument text-xl font-semibold text-cyan-800">kriya</span> means action.</p>
             <p>In many Indian households, there&apos;s a subtle hesitation around reading ancient scriptures, as if they&apos;re meant only for one&apos;s post-retirement years, something to turn to after the rush of life has passed. I&apos;ve always disagreed with that.</p>
             <p>Krishna and Arjuna didn&apos;t have their dialogue at leisure on a swing in their backyard. It happened on the battlefield of Kurukshetra, amidst action, confusion, and moral conflict.</p>
-            <p className="font-medium">The Gita isn&apos;t meant to be read when life is calm, but when it&apos;s at its most chaotic.</p>
+            <p ref={gitaRef} className="font-medium">
+              <RoughNotation
+                type="underline"
+                show={showGitaHighlight}
+                color="#F0B078"
+                strokeWidth={2}
+                padding={2}
+                animationDuration={1200}
+                multiline
+              >
+                The Gita isn&apos;t meant to be read when life is calm, but when it&apos;s at its most chaotic.
+              </RoughNotation>
+            </p>
             <p>That&apos;s what <span className="font-instrument text-xl font-semibold italic text-cyan-800">kriya</span> stands for: bringing the wisdom of the Gita into the most actionable phase of your life. To not just read it, but to live it as you take on your own daily battles.</p>
           </div>
         </div>
