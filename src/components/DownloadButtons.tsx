@@ -27,13 +27,21 @@ export default function DownloadButtons() {
   if (!isMobile) {
     return (
       <div className="mb-8 mt-6 flex flex-col items-center md:items-start">
-        <Image
-          src={QR_CODE_URL}
-          alt="Scan to download Kriya"
-          width={160}
-          height={160}
-          className="rounded-md bg-white p-2 shadow-sm"
-        />
+        <div className="relative h-40 w-40">
+          <div className="absolute inset-2 overflow-hidden rounded-md bg-white shadow-sm">
+            <Image
+              src={QR_CODE_URL}
+              alt="Scan to download Kriya"
+              width={160}
+              height={160}
+              className="scale-[1.1]"
+            />
+          </div>
+          <span className="pointer-events-none absolute left-0 top-0 h-5 w-5 rounded-tl-md border-l-2 border-t-2 border-gray-900/70" aria-hidden="true" />
+          <span className="pointer-events-none absolute right-0 top-0 h-5 w-5 rounded-tr-md border-r-2 border-t-2 border-gray-900/70" aria-hidden="true" />
+          <span className="pointer-events-none absolute bottom-0 left-0 h-5 w-5 rounded-bl-md border-b-2 border-l-2 border-gray-900/70" aria-hidden="true" />
+          <span className="pointer-events-none absolute bottom-0 right-0 h-5 w-5 rounded-br-md border-b-2 border-r-2 border-gray-900/70" aria-hidden="true" />
+        </div>
         <p className="mt-3 text-center text-sm font-medium text-gray-500 md:text-left">
           Scan to download Kriya on your phone
         </p>
@@ -51,7 +59,7 @@ export default function DownloadButtons() {
         transition={{ type: "spring", stiffness: 400, damping: 20 }}
       >
         <Download className="h-4 w-4" aria-hidden="true" />
-        <span>Download <span className="font-instrument text-lg font-normal italic">kriya</span></span>
+        <span>Download</span>
       </motion.a>
     </div>
   );
