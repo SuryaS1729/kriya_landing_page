@@ -44,7 +44,7 @@ export default function AmyLandingHero() {
         className="relative w-full bg-cover bg-center bg-[url('/assets/9.jpeg')] md:bg-[url('/assets/6.jpeg')]"
       >
         <div aria-hidden="true" className="absolute inset-0 hidden bg-white/30 md:block" />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/45 to-transparent md:hidden" />
+        <div aria-hidden="true" className="absolute right-0 top-0 h-[45%] w-[85%] bg-gradient-to-bl from-white/70 via-white/35 to-transparent md:hidden" />
         <div className="relative mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center p-6 pt-30 md:pt-6">
           <div className="w-full max-w-[980px] md:rounded-3xl md:border md:border-gray-500/10 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
             <main className="z-50 flex w-full flex-col items-center justify-center gap-8 md:flex-row md:gap-24">
