@@ -26,7 +26,12 @@ export default function DownloadButtons() {
 
   if (!isMobile) {
     return (
-      <div className="mb-4 mt-6 flex flex-col items-center md:items-start">
+      <motion.div
+        className="mb-4 mt-6 flex flex-col items-center md:items-start"
+        initial={{ opacity: 0, y: 12, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="relative h-40 w-40">
           <div className="absolute inset-2 overflow-hidden rounded-md bg-white shadow-sm">
             <Image
@@ -45,12 +50,17 @@ export default function DownloadButtons() {
         <p className="mt-3 text-center text-sm font-medium text-gray-700 md:text-left">
           Scan to download <span className=" font-instrument text-lg italic">kriya</span> on your phone
         </p>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="mb-8 mt-6">
+    <motion.div
+      className="mb-8 mt-6"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+    >
       <motion.a
         href="/download"
         className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-teal-700"
@@ -61,6 +71,6 @@ export default function DownloadButtons() {
         <Download className="h-4 w-4" aria-hidden="true" />
         <span>Download the app</span>
       </motion.a>
-    </div>
+    </motion.div>
   );
 }

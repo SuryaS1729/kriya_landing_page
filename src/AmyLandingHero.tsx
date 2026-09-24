@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
@@ -10,12 +10,43 @@ import { recoleta } from "@/fonts";
 
 const LOGO_URL = "https://kriyarecordings.bitwisedharma.com/icon.webp";
 
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.09, delayChildren: 0.1 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const scrollContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const scrollItem = {
+  hidden: { opacity: 0, y: 24 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
 export default function AmyLandingHero() {
   const [showAnnotation, setShowAnnotation] = useState(false);
   const [showGitaHighlight, setShowGitaHighlight] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const prefersReducedMotion = useReducedMotion();
-  const gitaRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
@@ -28,29 +59,22 @@ export default function AmyLandingHero() {
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(() => setShowAnnotation(true), 600);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    const el = gitaRef.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setShowGitaHighlight(true);
+    if (prefersReducedMotion) {
+      setShowAnnotation(true);
       return;
     }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowGitaHighlight(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+    // Fallback in case onAnimationComplete doesn't fire (e.g. background tab).
+    // Container stagger finishes ~1.06s, so 1.5s keeps sequencing intact.
+    const t = setTimeout(() => setShowAnnotation(true), 1500);
+    return () => clearTimeout(t);
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setShowAnnotation(true);
+      setShowGitaHighlight(true);
+    }
+  }, [prefersReducedMotion]);
   return (
     <div className="font-sans ">
       <div
@@ -61,12 +85,18 @@ export default function AmyLandingHero() {
         <div className="relative mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center p-6 pt-30 md:pt-6">
           <div className="w-full max-w-[980px] overflow-hidden md:rounded-3xl md:border md:border-gray-500/10 md:bg-white/[0.14] md:p-10 md:shadow-2xl md:shadow-black/10 md:backdrop-blur-sm">
             <main className="z-50 flex w-full flex-col items-center justify-center gap-8 md:flex-row md:gap-24">
-          <div className="w-full max-w-[450px] text-center md:w-[50%] md:text-left">
-            <div className="mb-6 flex items-center justify-center text-3xl font-semibold md:justify-start">
+          <motion.div
+            className="w-full max-w-[450px] text-center md:w-[50%] md:text-left"
+            variants={container}
+            initial={prefersReducedMotion ? "show" : "hidden"}
+            animate="show"
+            onAnimationComplete={() => setShowAnnotation(true)}
+          >
+            <motion.div variants={item} className="mb-6 flex items-center justify-center text-3xl font-semibold md:justify-start">
               <Image src={LOGO_URL} alt="Kriya" width={60} height={60} className="mr-3 rotate-[-9deg] rounded-[14px] shadow-sm" />
               <span className="inline font-instrument font-medium italic tracking-normal text-cyan-800 md:hidden">kriya</span>
-            </div>
-            <h1 className={`${recoleta.className} mb-4 text-[1.93rem] leading-tight text-gray-900 md:text-[2.46rem]`}>Get{" "}
+            </motion.div>
+            <motion.h1 variants={item} className={`${recoleta.className} mb-4 text-[1.93rem] leading-tight text-gray-900 md:text-[2.46rem]`}>Get{" "}
               <RoughNotation
                 type="underline"
                 show={showAnnotation}
@@ -78,16 +108,18 @@ export default function AmyLandingHero() {
               >
                 Spiritually Productive
               </RoughNotation>
-            </h1>
-            <p className="mb-6 text-base leading-relaxed text-gray-600">
+            </motion.h1>
+            <motion.p variants={item} className="mb-6 text-base leading-relaxed text-gray-600">
               <span className="font-instrument text-xl font-semibold italic tracking-normal text-cyan-800">kriya</span> blends timeless wisdom from the Gita with a modern workflow to help you act with clarity.
               <br /><br />Plan your day, one mindful task at a time.
-            </p>
-            <DownloadButtons />
-            <p className="mt-3 inline-flex items-center rounded-full border border-[#4A6484]/10 px-3 py-1 text-center font-space-mono text-[11px] tracking-wide text-gray-500 md:-ml-3">
+            </motion.p>
+            <motion.div variants={item}>
+              <DownloadButtons />
+            </motion.div>
+            <motion.p variants={item} className="mt-3 inline-flex items-center rounded-full border border-[#4A6484]/10 px-3 py-1 text-center font-space-mono text-[11px] tracking-wide text-gray-500 md:-ml-3">
               free forever · offline · no signup · open source
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
           {isDesktop && !prefersReducedMotion ? (
             <motion.div
               className="mt-6 w-full max-w-[350px] flex-none md:mt-0"
@@ -108,15 +140,27 @@ export default function AmyLandingHero() {
       </div>
 
       <section className="mt-16 px-6">
-        <div className="mx-auto max-w-[700px] selection:bg-blue-900/70 selection:text-white">
-          <h2 className={`${recoleta.className}  mb-6 text-center text-2xl text-gray-900 md:mb-8 md:text-3xl`}>The story behind <span className="text-cyan-800 font-instrument italic">kriya ...</span></h2>
+        <motion.div
+          className="mx-auto max-w-[700px] selection:bg-blue-900/70 selection:text-white"
+          variants={scrollContainer}
+          initial={prefersReducedMotion ? "show" : "hidden"}
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          <motion.h2 variants={scrollItem} className={`${recoleta.className}  mb-6 text-center text-2xl text-gray-900 md:mb-8 md:text-3xl`}>The story behind <span className="text-cyan-800 font-instrument italic">kriya ...</span></motion.h2>
           <div className="space-y-4 leading-relaxed text-gray-700">
-            <p>The seed for <span className="font-instrument text-xl font-medium italic text-cyan-800">kriya</span> was first inspired by <a href="https://x.com/ash1sh0kumar" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@ash1sh0kumar</a>&apos;s Gitasay, and later, the <a href="https://x.com/indiainpixels" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@indiainpixels</a> Hackathon reaffirmed my belief that many Indians today are seeking to reconnect with their roots. There’s an Indic renaissance quietly unfolding, a growing curiosity to understand our own philosophies in a modern context.</p>
-            <p>The goal was simple: to make the Bhagavad Gita accessible to everyone, especially millennials and Gen Z who are in the most active, fast-paced phases of their lives, on their phones, in a clean and modern interface.</p>
-            <p className="font-semibold italic text-cyan-800"><span className="font-instrument text-xl font-semibold text-cyan-800">kriya</span> means action.</p>
-            <p>In many Indian households, there&apos;s a subtle hesitation around reading ancient scriptures, as if they&apos;re meant only for one&apos;s post-retirement years, something to turn to after the rush of life has passed. I&apos;ve always disagreed with that.</p>
-            <p>Krishna and Arjuna didn&apos;t have their dialogue at leisure on a swing in their backyard. It happened on the battlefield of Kurukshetra, amidst action, confusion, and moral conflict.</p>
-            <p ref={gitaRef} className="font-medium">
+            <motion.p variants={scrollItem}>The seed for <span className="font-instrument text-xl font-medium italic text-cyan-800">kriya</span> was first inspired by <a href="https://x.com/ash1sh0kumar" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@ash1sh0kumar</a>&apos;s Gitasay, and later, the <a href="https://x.com/indiainpixels" target="_blank" rel="noopener noreferrer" className="text-cyan-800 hover:underline">@indiainpixels</a> Hackathon reaffirmed my belief that many Indians today are seeking to reconnect with their roots. There’s an Indic renaissance quietly unfolding, a growing curiosity to understand our own philosophies in a modern context.</motion.p>
+            <motion.p variants={scrollItem}>The goal was simple: to make the Bhagavad Gita accessible to everyone, especially millennials and Gen Z who are in the most active, fast-paced phases of their lives, on their phones, in a clean and modern interface.</motion.p>
+            <motion.p variants={scrollItem} className="font-semibold italic text-cyan-800"><span className="font-instrument text-xl font-semibold text-cyan-800">kriya</span> means action.</motion.p>
+            <motion.p variants={scrollItem}>In many Indian households, there&apos;s a subtle hesitation around reading ancient scriptures, as if they&apos;re meant only for one&apos;s post-retirement years, something to turn to after the rush of life has passed. I&apos;ve always disagreed with that.</motion.p>
+            <motion.p variants={scrollItem}>Krishna and Arjuna didn&apos;t have their dialogue at leisure on a swing in their backyard. It happened on the battlefield of Kurukshetra, amidst action, confusion, and moral conflict.</motion.p>
+            <motion.p
+              variants={scrollItem}
+              className="font-medium"
+              onAnimationComplete={(definition) => {
+                if (definition === "show") setShowGitaHighlight(true);
+              }}
+            >
               <RoughNotation
                 type="underline"
                 show={showGitaHighlight}
@@ -128,10 +172,10 @@ export default function AmyLandingHero() {
               >
                 The Gita isn&apos;t meant to be read when life is calm, but when it&apos;s at its most chaotic.
               </RoughNotation>
-            </p>
-            <p>That&apos;s what <span className="font-instrument text-xl font-semibold italic text-cyan-800">kriya</span> stands for: bringing the wisdom of the Gita into the most actionable phase of your life. To not just read it, but to live it as you take on your own daily battles.</p>
+            </motion.p>
+            <motion.p variants={scrollItem}>That&apos;s what <span className="font-instrument text-xl font-semibold italic text-cyan-800">kriya</span> stands for: bringing the wisdom of the Gita into the most actionable phase of your life. To not just read it, but to live it as you take on your own daily battles.</motion.p>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       <footer className="mx-auto mt-24 w-full border-t border-gray-200 bg-gray-50 md:max-w-[1100px]">
