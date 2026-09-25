@@ -3,15 +3,14 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { recoleta } from "@/fonts";
+import { ANDROID_URL, IOS_URL, QR_CODE_URL } from "@/lib/constants";
+import { pageMetadata } from "@/lib/metadata";
 
-const IOS_URL = "https://apps.apple.com/us/app/kriya-spiritual-productivity/id6752873883";
-const ANDROID_URL = "https://play.google.com/store/apps/details?id=com.surya7314.kriya";
-const QR_CODE_URL = "https://kriyarecordings.bitwisedharma.com/kriya-download-blue2.svg";
-
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Download Kriya",
   description: "Scan to download Kriya — spiritual productivity for the modern age.",
-};
+  path: "/download",
+});
 
 export default async function DownloadPage() {
   const userAgent = (await headers()).get("user-agent") ?? "";

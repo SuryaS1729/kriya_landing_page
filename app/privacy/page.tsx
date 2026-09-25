@@ -1,9 +1,11 @@
+import { pageMetadata } from "@/lib/metadata";
 import styles from "./privacy.module.css";
 
-export const metadata = {
-  title: "Privacy Policy | Kriya: Spiritual Productivity",
+export const metadata = pageMetadata({
+  title: "Privacy Policy",
   description: "Privacy Policy for Kriya: Spiritual Productivity.",
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

@@ -7,8 +7,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { RoughNotation } from "react-rough-notation";
 import DownloadButtons from "@/components/DownloadButtons";
 import { recoleta } from "@/fonts";
-
-const LOGO_URL = "https://kriyarecordings.bitwisedharma.com/icon.webp";
+import { ANDROID_URL, IOS_URL, LOGO_URL, X_PROFILE_URL } from "@/lib/constants";
 
 const container = {
   hidden: {},
@@ -45,22 +44,12 @@ const scrollItem = {
 export default function AmyLandingHero() {
   const [showAnnotation, setShowAnnotation] = useState(false);
   const [showGitaHighlight, setShowGitaHighlight] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
   const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
-    const updateViewport = () => setIsDesktop(mediaQuery.matches);
-
-    updateViewport();
-    mediaQuery.addEventListener("change", updateViewport);
-
-    return () => mediaQuery.removeEventListener("change", updateViewport);
-  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion) {
       setShowAnnotation(true);
+      setShowGitaHighlight(true);
       return;
     }
     // Fallback in case onAnimationComplete doesn't fire (e.g. background tab).
@@ -69,16 +58,10 @@ export default function AmyLandingHero() {
     return () => clearTimeout(t);
   }, [prefersReducedMotion]);
 
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setShowAnnotation(true);
-      setShowGitaHighlight(true);
-    }
-  }, [prefersReducedMotion]);
   return (
     <div className="font-sans ">
       <div
-        className="relative w-full bg-cover bg-center bg-[url('/assets/9.jpeg')] md:bg-[url('/assets/6.jpeg')]"
+        className="relative w-full bg-cover bg-center bg-[url('/assets/9.webp')] md:bg-[url('/assets/6.webp')]"
       >
         <div aria-hidden="true" className="absolute inset-0 hidden bg-white/30 md:block" />
         <div aria-hidden="true" className="absolute right-0 top-0 h-[45%] w-[85%] bg-gradient-to-bl from-white/70 via-white/35 to-transparent md:hidden" />
@@ -120,20 +103,9 @@ export default function AmyLandingHero() {
               free forever · offline · no signup · open source
             </motion.p>
           </motion.div>
-          {isDesktop && !prefersReducedMotion ? (
-            <motion.div
-              className="mt-6 w-full max-w-[350px] flex-none md:mt-0"
-              initial={{ x: 220, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <video src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp" className="h-auto w-full rounded-xl shadow-lg" autoPlay muted loop playsInline preload="metadata" aria-label="Kriya App Preview" />
-            </motion.div>
-          ) : (
-            <div className="mt-6 w-full max-w-[350px] flex-none md:mt-0">
-              <video src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp" className="h-auto w-full rounded-xl shadow-lg" autoPlay muted loop playsInline preload="metadata" aria-label="Kriya App Preview" />
-            </div>
-          )}
+          <div className="hero-video-enter mt-6 w-full max-w-[350px] flex-none md:mt-0">
+            <video src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp" className="h-auto w-full rounded-xl shadow-lg" autoPlay muted loop playsInline preload="metadata" aria-label="Kriya App Preview" />
+          </div>
             </main>
           </div>
         </div>
@@ -190,15 +162,15 @@ export default function AmyLandingHero() {
             </div>
             <div className="flex flex-col items-center gap-6 md:flex-row">
               <div className="flex gap-6 text-sm">
-                <a href="https://x.com/SuryaS_1729" target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">Twitter</a>
-                <a href="https://play.google.com/store/apps/details?id=com.surya7314.kriya" target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">Android</a>
-                <a href="https://apps.apple.com/us/app/kriya-spiritual-productivity/id6752873883" target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">iOS</a>
+                <a href={X_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">Twitter</a>
+                <a href={ANDROID_URL} target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">Android</a>
+                <a href={IOS_URL} target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">iOS</a>
                 <Link href="/privacy" className="text-gray-600 transition-colors hover:text-gray-800">Privacy Policy</Link>
               </div>
             </div>
           </div>
           <div className="mt-8 border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
-            <p>&copy; 2025 Kriya. Built with 🧡 by the BitwiseDharma company</p>
+            <p>&copy; {new Date().getFullYear()} Kriya. Built with 🧡 by the BitwiseDharma company</p>
           </div>
         </div>
       </footer>

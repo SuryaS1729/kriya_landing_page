@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "kriyarecordings.bitwisedharma.com", pathname: "/**" },
-    ],
+  poweredByHeader: false,
+  // Pin the workspace root. Without this, Turbopack walks up and trips over a
+  // stray package-lock.json in the parent directory.
+  turbopack: {
+    root: path.join(import.meta.dirname),
   },
 };
 

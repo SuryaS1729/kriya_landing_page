@@ -12,6 +12,12 @@ node_modules
 dist
 dist-ssr
 *.local
+*.tsbuildinfo
+
+# bun is the package manager - don't track other lockfiles
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # Editor directories and files
 .vscode/*
