@@ -76,7 +76,13 @@ export default function AmyLandingHero() {
             onAnimationComplete={() => setShowAnnotation(true)}
           >
             <motion.div variants={item} className="mb-6 flex items-center justify-center text-3xl font-semibold md:justify-start">
-              <Image src={LOGO_URL} alt="Kriya" width={60} height={60} className="mr-3 rotate-[-9deg] rounded-[14px] shadow-sm" />
+              <Link
+                href="/download"
+                className="md:hidden"
+                aria-label="Download Kriya on the App Store or Google Play"
+              >
+                <Image src={LOGO_URL} alt="" width={60} height={60} className="mr-3 rotate-[-9deg] rounded-[14px] shadow-sm" />
+              </Link>
               <span className="inline font-instrument font-medium italic tracking-normal text-cyan-800 md:hidden">kriya</span>
             </motion.div>
             <motion.h1 variants={item} className={`${recoleta.className} mb-4 text-[1.93rem] leading-tight text-gray-900 md:text-[2.46rem]`}>Get{" "}

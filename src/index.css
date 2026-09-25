@@ -7,7 +7,7 @@
   --font-space-mono: var(--font-space-mono-family), monospace;
 }
 
-@keyframes hero-video-enter {
+@keyframes hero-video-enter-x {
   from {
     opacity: 0;
     transform: translateX(220px);
@@ -19,12 +19,35 @@
   }
 }
 
-/* The demo video slides in from the right on desktop only. This lives in CSS
-   rather than motion so it can be gated on a media query at first paint —
-   a client-side matchMedia would resolve after mount, by which point the
-   animation has already been skipped. */
+@keyframes hero-video-enter-y {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The demo video slides in from the right on desktop and up from the bottom on
+   mobile. This lives in CSS rather than motion so it can be gated on a media
+   query at first paint — a client-side matchMedia would resolve after mount, by
+   which point the animation has already been skipped.
+
+   On mobile the offset is a full 100% because the wrapper box has an
+   unprefixed `overflow-hidden`: the box's bottom edge sits flush with the video
+   (no padding/border below 768px), so the clip is what the video rises out of.
+   That also stops it painting down over the story section while it animates. */
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .hero-video-enter {
+    animation: hero-video-enter-y 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+  }
+}
+
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
   .hero-video-enter {
-    animation: hero-video-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+    animation: hero-video-enter-x 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
   }
 }

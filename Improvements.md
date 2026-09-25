@@ -85,8 +85,19 @@ Legend: `[x]` done · `[ ]` pending · `[~]` reviewed and deliberately left unch
       `initial` is only read on mount, so by the time a client-side `matchMedia` resolved, the
       animation had already been skipped. CSS also lets the animation start at first paint and
       gates it on `prefers-reduced-motion` natively. The `isDesktop` state and its
-      `matchMedia` effect are gone entirely. Verified: one `<video>` tag in the output, and the
-      keyframes emitted inside `@media (min-width:768px) and (prefers-reduced-motion:no-preference)`.
+      `matchMedia` effect are gone entirely. Verified: one `<video>` tag in the output.
+
+      Direction is breakpoint-dependent — `translateX(220px)` in from the right on desktop,
+      `translateY(100%)` up from the bottom on mobile — via two keyframes
+      (`hero-video-enter-x` / `hero-video-enter-y`) selected by mutually exclusive
+      `max-width: 767px` / `min-width: 768px` media queries, both still gated on
+      `prefers-reduced-motion: no-preference`.
+
+      The full-height mobile offset works *because* of the unprefixed `overflow-hidden` on the
+      wrapper box (`src/AmyLandingHero.tsx:69`). Below 768px that box has no padding, border, or
+      rounding, so its bottom edge sits flush with the video and acts as the mask the video rises
+      out of. Removing the clip on mobile would break it: the downward `translateY(100%)` would
+      paint the video over the story section below for the duration of the animation.
 - [x] **Merge the duplicated effects.** Two effects both set `showAnnotation`; the second's first
       line was a redundant duplicate of the first's early-return branch. Now one effect.
 - [x] **Fix the hardcoded copyright year.** Was `&copy; 2025`; now `new Date().getFullYear()`.
