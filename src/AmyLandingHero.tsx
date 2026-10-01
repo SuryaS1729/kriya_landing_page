@@ -102,6 +102,11 @@ export default function AmyLandingHero() {
             <motion.p variants={item} className="mt-3 inline-flex items-center rounded-full border border-[#4A6484]/10 px-3 py-1 text-center font-space-mono text-[11px] tracking-wide text-gray-500 md:-ml-3">
               free forever · offline · no signup · open source
             </motion.p>
+            <motion.div variants={item}>
+              <Link href="/donate" className="mt-4 inline-block text-sm text-cyan-800/75 transition-colors hover:text-cyan-800 hover:underline">
+                If Kriya has been useful, you can support it →
+              </Link>
+            </motion.div>
           </motion.div>
           <div className="hero-video-enter mt-6 w-full max-w-[350px] flex-none md:mt-0">
             <video src="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/demovideofinal.mp4" poster="https://pub-4862ee5d51df47c4849ba812da5460ff.r2.dev/frame.webp" className="h-auto w-full rounded-xl shadow-lg" autoPlay muted loop playsInline preload="metadata" aria-label="Kriya App Preview" />
@@ -165,6 +170,7 @@ export default function AmyLandingHero() {
                 <a href={X_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">Twitter</a>
                 <a href={ANDROID_URL} target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">Android</a>
                 <a href={IOS_URL} target="_blank" rel="noopener noreferrer" className="text-gray-600 transition-colors hover:text-gray-800">iOS</a>
+                <Link href="/donate" className="text-gray-600 transition-colors hover:text-gray-800">Donate</Link>
                 <Link href="/privacy" className="text-gray-600 transition-colors hover:text-gray-800">Privacy Policy</Link>
               </div>
             </div>
