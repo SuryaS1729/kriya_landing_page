@@ -4,6 +4,7 @@ import { recoleta } from "@/fonts";
 import { LOGO_URL } from "@/lib/constants";
 import { pageMetadata } from "@/lib/metadata";
 import DonateCheckout from "./DonateCheckout";
+import Contributors from "./Contributors";
 
 export const metadata = pageMetadata({
   title: "Support Kriya",
@@ -72,6 +73,7 @@ export default function DonatePage() {
             </div>
 
             <DonateCheckout />
+            <Contributors />
           </div>
         </section>
 

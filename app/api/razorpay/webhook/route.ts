@@ -1,5 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
+import Razorpay from "razorpay";
+import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const runtime = "nodejs";
 
@@ -54,6 +56,38 @@ export async function POST(request: Request) {
       ? (payment.entity as Record<string, unknown>)
       : undefined;
 
+  if (event === "payment.captured" && paymentEntity?.id && paymentEntity.order_id) {
+    try {
+      const razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID ?? "",
+        key_secret: process.env.RAZORPAY_KEY_SECRET ?? "",
+      });
+      const order = await razorpay.orders.fetch(String(paymentEntity.order_id));
+      const notes = order.notes as Record<string, string> | undefined;
+
+      if (notes?.display_consent === "true" && notes.donor_name) {
+        const supabase = getSupabaseAdmin();
+        const { error } = await supabase.from("contributors").upsert(
+          {
+            name: notes.donor_name,
+            twitter_handle: notes.twitter_handle || null,
+            payment_id: String(paymentEntity.id),
+            order_id: String(paymentEntity.order_id),
+            display_consent: true,
+          },
+          { onConflict: "payment_id", ignoreDuplicates: true },
+        );
+
+        if (error) {
+          throw error;
+        }
+      }
+    } catch (error) {
+      console.error("Contributor persistence failed", error);
+      return NextResponse.json({ error: "Unable to process webhook." }, { status: 500 });
+    }
+  }
+
   console.info("Razorpay webhook received", {
     event,
     paymentId: paymentEntity?.id,
@@ -61,8 +95,5 @@ export async function POST(request: Request) {
     status: paymentEntity?.status,
   });
 
-  // Payment state is currently verified in the checkout handler. This endpoint
-  // acknowledges signed events so Razorpay can deliver and retry them reliably.
-  // Add durable business actions here when a database or notification workflow exists.
   return NextResponse.json({ received: true });
 }

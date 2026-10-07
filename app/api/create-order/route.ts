@@ -23,11 +23,38 @@ export async function POST(request: Request) {
       ? (body as { amount?: unknown }).amount
       : undefined;
 
+  const donorName =
+    typeof body === "object" && body !== null && "donorName" in body
+      ? (body as { donorName?: unknown }).donorName
+      : undefined;
+  const twitterHandle =
+    typeof body === "object" && body !== null && "twitterHandle" in body
+      ? (body as { twitterHandle?: unknown }).twitterHandle
+      : undefined;
+  const displayConsent =
+    typeof body === "object" && body !== null && "displayConsent" in body
+      ? (body as { displayConsent?: unknown }).displayConsent
+      : false;
+
   if (typeof amount !== "number" || !Number.isInteger(amount) || amount < MINIMUM_AMOUNT_PAISE) {
     return NextResponse.json(
       { error: `Amount must be at least ${MINIMUM_AMOUNT_PAISE} paise.` },
       { status: 400 },
     );
+  }
+
+  if (displayConsent !== true) {
+    if (donorName !== undefined || twitterHandle !== undefined) {
+      return NextResponse.json({ error: "Contributor details require display consent." }, { status: 400 });
+    }
+  } else if (
+    typeof donorName !== "string" ||
+    donorName.trim().length < 1 ||
+    donorName.trim().length > 80 ||
+    (twitterHandle !== undefined &&
+      (typeof twitterHandle !== "string" || twitterHandle.trim().length > 100))
+  ) {
+    return NextResponse.json({ error: "Please enter a valid contributor name and Twitter/X handle." }, { status: 400 });
   }
 
   try {
@@ -36,6 +63,15 @@ export async function POST(request: Request) {
       amount,
       currency: "INR",
       receipt: `kriya_${Date.now()}`,
+      ...(displayConsent === true
+        ? {
+            notes: {
+              donor_name: (donorName as string).trim(),
+              twitter_handle: typeof twitterHandle === "string" ? twitterHandle.trim() : "",
+              display_consent: "true",
+            },
+          }
+        : {}),
     });
 
     return NextResponse.json({
