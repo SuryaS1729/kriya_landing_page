@@ -13,6 +13,9 @@ dist
 dist-ssr
 *.local
 *.tsbuildinfo
+.env
+.env.*
+!.env.example
 
 # bun is the package manager - don't track other lockfiles
 package-lock.json

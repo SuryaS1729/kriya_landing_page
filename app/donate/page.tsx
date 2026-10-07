@@ -3,6 +3,7 @@ import Link from "next/link";
 import { recoleta } from "@/fonts";
 import { LOGO_URL } from "@/lib/constants";
 import { pageMetadata } from "@/lib/metadata";
+import DonateCheckout from "./DonateCheckout";
 
 export const metadata = pageMetadata({
   title: "Support Kriya",
@@ -70,18 +71,7 @@ export default function DonatePage() {
               </div>
             </div>
 
-            <div className="mx-auto mt-10 max-w-[360px] rounded-2xl border border-[#4a6484]/10 bg-white/70 p-5 shadow-sm shadow-black/5">
-              <button
-                type="button"
-                disabled
-                className="w-full cursor-not-allowed rounded-xl bg-cyan-800 px-5 py-3 text-sm font-semibold text-white opacity-80"
-              >
-                Contribution link coming soon
-              </button>
-              <p className="mt-3 font-space-mono text-[10px] tracking-wide text-gray-400">
-                payment details will be added here
-              </p>
-            </div>
+            <DonateCheckout />
           </div>
         </section>
 
